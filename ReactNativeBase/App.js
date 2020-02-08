@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 
 import { Text, View, StyleSheet, Button, Image } from 'react-native';
 
+class Imagem extends Component {
+  render() {
+    let imagem = {
+      uri: 'https://as2.ftcdn.net/jpg/00/59/03/51/500_F_59035104_XtkeD0GJgfGxf9Hiq8tXNibjhy42ZwCx' + this.props.nome
+    }
+
+    return (
+      <Image source={imagem} style={{width: parseInt(this.props.largura), height: parseInt(this.props.altura)}}/>
+    );
+  }
+}
+
 export default class PrimeiroProjeto extends Component {
 
   somar(a, b) {
@@ -24,7 +36,7 @@ export default class PrimeiroProjeto extends Component {
           alert("Clicado aaaa");
         }} />
         <Text style={{ fontSize: 30, color: 'red', margin: 20}}>Texto aleatório</Text>
-        <Image source={imagem} style={{width : 300, height: 300}}/>
+        <Imagem nome='.jpg' largura='250' altura='250'/>
       </View>
     );
   }
