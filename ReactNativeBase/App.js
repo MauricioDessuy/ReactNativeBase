@@ -7,11 +7,11 @@ export default class PrimeiroProjeto extends Component {
   render() {
 
     return (
-      <View style={styles.padrao}>
-        <Text style={styles.azulGrande}>Este é o texto 1</Text>
-        <Text style={styles.vermelho}>Este é o texto 2</Text>
-        <Text style={[styles.azulGrande, styles.vermelho]}>Este é o texto 3</Text>
-        <Text style={[styles.vermelho, styles.azulGrande]}>Este é o texto 4</Text>
+      <View style={{flex: 1, backgroundColor: 'green'}}>
+        <View style={{height: 170, backgroundColor: 'blue'}}></View>
+        <View style={{flex: 1, backgroundColor: 'yellow'}}></View>
+        <View style={{flex: 2, backgroundColor: 'black'}}></View>
+        <View style={{flex: 3, backgroundColor: 'red'}}></View>
       </View>
     );
   }
@@ -19,17 +19,5 @@ export default class PrimeiroProjeto extends Component {
 }
 
 const styles = StyleSheet.create({
-  padrao: {
-    paddingTop: 20,
-    backgroundColor: '#00FF00'
-  },
-  azulGrande: {
-    color: 'blue',
-    fontSize: 30,
-    textAlign: 'center',
-  },
-  vermelho: {
-    color: 'red',
-    fontSize: 15
-  }
+  
 });
