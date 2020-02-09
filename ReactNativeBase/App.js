@@ -1,70 +1,75 @@
 import React, { Component } from 'react';
 
-import { Text, View, StyleSheet, Button, Image, TextInput, Alert, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, Button, Image, TextInput, Alert, ImageBackground, TouchableOpacity } from 'react-native';
+
+class Botao extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+    this.styles = StyleSheet.create({
+      botao: {
+        width: 250,
+        height: 50,
+        borderWidth: 2,
+        borderColor: props.color,
+        backgroundColor: 'transparent',
+        borderRadius: 25
+      },
+      botaoArea: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      botaoText: {
+        color: props.color,
+        fontSize: 14,
+        fontWeight: 'bold'
+      }
+    });
+  }
+
+  render () {
+    return (
+      <TouchableOpacity style={this.styles.botao}
+        onPress={this.props.onPress}>
+        <View style={this.styles.botaoArea}>
+          <Text style={this.styles.botaoText}>{this.props.text}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 export default class PrimeiroProjeto extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      consumido: 0,
-      status: 'Ruim',
-      pct: 0
-    }
-    this.addCopo = this.addCopo.bind(this);
-    this.atualizar = this.atualizar.bind(this);
+      frase: 'Frase do dia...'
+    };
+    this.frases = ['A vida trará coisas boas se tiveres paciência.', 'Demonstre amor e alegria em todas as oportunidades e verás que a paz nasce dentro de você.', 'Não compense na ira o que lhe falta na razão.', 'Defeitos e virtudes são apenas dois lados da mesma moeda.', 'A maior de todas as torres começa no solo.', 'Não há que ser forte. Há que ser flexível.', 'Gente todo dia arruma os cabelos, por que não o coração?'];
+
+    this.quebrarBiscoito = this.quebrarBiscoito.bind(this);
   }
 
-  atualizar() {
+  quebrarBiscoito() {
     let s = this.state;
-    s.pct = Math.floor(parseInt(((s.consumido / 2000) * 100)));
-    if (s.pct >= 100) {
-      s.status = "Bom";
-    } else {
-      s.status = "Ruim";
-    }
+    let r = Math.floor(Math.random() * this.frases.length);
+    s.frase = this.frases[r];
     this.setState(s);
-  }
-
-  addCopo() {
-    let s = this.state;
-    s.consumido += 200;
-    this.setState(s);
-    this.atualizar();
   }
 
   render() {
 
     return (
       <View style={styles.body}>
-        <ImageBackground source={require('./assets/waterbg.png')}
-          style={styles.bgimage}>
-          <View>
-            <View style={styles.infoArea}>
-              <View style={styles.area}>
-                <Text style={styles.areaTitulo}>Meta</Text>
-                <Text style={styles.areaDado}>2000ml</Text>
-              </View>
-              <View style={styles.area}>
-                <Text style={styles.areaTitulo}>Consumido</Text>
-                <Text style={styles.areaDado}>{this.state.consumido}ml</Text>
-              </View>
-              <View style={styles.area}>
-                <Text style={styles.areaTitulo}>Status</Text>
-                <Text style={styles.areaDado}>{this.state.status}</Text>
-              </View>
-            </View>
-
-            <View style={styles.pctArea}>
-              <Text style={styles.pctTexto}>{this.state.pct}%</Text>
-            </View>
-
-            <View style={styles.btnArea}>
-              <Button title="Beber 200ml" 
-                onPress={this.addCopo}/>
-            </View>
-          </View>
-        </ImageBackground>
+        <Image source={require('./assets/cookie.png')}/>
+        <Text style={styles.texto}>"{this.state.frase}"</Text>
+        <Botao color='#B59619' text="Quebrar Biscoito" onPress={this.quebrarBiscoito}/>
       </View>
     );
   }
@@ -75,40 +80,14 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     paddingTop: 30,
-
-  },
-  bgimage: {
-    flex: 1,
-    width: null
-  },
-  infoArea: {
-    flex: 1,
-    flexDirection: 'row',
-    marginTop: 70
-  },
-  area: {
-    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center'
   },
-  areaTitulo: {
-    color: '#45b2Fc'
-  },
-  areaDado: {
-    color: '#2b4274',
-    fontSize: 15,
-    fontWeight: 'bold'
-  },
-  pctArea: {
-    marginTop: 170,
-    alignItems: 'center'
-  },
-  pctTexto: {
-    fontSize: 70,
-    color: '#FFFFFF',
-    backgroundColor: 'transparent'
-  },
-  btnArea: {
-    marginTop: 30,
-    alignItems: 'center'
+  texto: {
+    fontSize: 17,
+    color: '#B59619',
+    margin: 30,
+    fontStyle: 'italic',
+    textAlign: 'center'
   }
 });
