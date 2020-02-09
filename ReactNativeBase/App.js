@@ -2,64 +2,44 @@ import React, { Component } from 'react';
 
 import { Text, View, StyleSheet, Button, Image, TextInput, Alert, ImageBackground, TouchableOpacity } from 'react-native';
 
-class Botao extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-    this.styles = StyleSheet.create({
-      botao: {
-        width: 250,
-        height: 50,
-        borderWidth: 2,
-        borderColor: props.color,
-        backgroundColor: 'transparent',
-        borderRadius: 25
-      },
-      botaoArea: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
-      botaoText: {
-        color: props.color,
-        fontSize: 14,
-        fontWeight: 'bold'
-      }
-    });
-  }
-
-  render () {
-    return (
-      <TouchableOpacity style={this.styles.botao}
-        onPress={this.props.onPress}>
-        <View style={this.styles.botaoArea}>
-          <Text style={this.styles.botaoText}>{this.props.text}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
-
 export default class PrimeiroProjeto extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      frase: 'Frase do dia...'
+      n: 0,
+      botao: 'VAI'
     };
-    this.frases = ['A vida trará coisas boas se tiveres paciência.', 'Demonstre amor e alegria em todas as oportunidades e verás que a paz nasce dentro de você.', 'Não compense na ira o que lhe falta na razão.', 'Defeitos e virtudes são apenas dois lados da mesma moeda.', 'A maior de todas as torres começa no solo.', 'Não há que ser forte. Há que ser flexível.', 'Gente todo dia arruma os cabelos, por que não o coração?'];
-
-    this.quebrarBiscoito = this.quebrarBiscoito.bind(this);
+    this.timer = null;
+    this.vai = this.vai.bind(this);
+    this.limpar = this.limpar.bind(this);
   }
 
-  quebrarBiscoito() {
+  vai() {
+    let state = this.state;
+    if (this.timer != null) {
+      clearInterval(this.timer);
+      this.timer = null;
+      state.botao = 'VAI';
+    } else {
+      this.timer = setInterval(() => {
+        let s = this.state;
+        s.n += 0.1;
+        this.setState(s);
+      }, 100);
+      state.botao = 'PARAR';
+    }
+    this.setState(state);
+  }
+
+  limpar() {
+    if (this.timer != null) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
     let s = this.state;
-    let r = Math.floor(Math.random() * this.frases.length);
-    s.frase = this.frases[r];
+    s.n = 0;
+    s.botao = 'VAI';
     this.setState(s);
   }
 
@@ -67,9 +47,18 @@ export default class PrimeiroProjeto extends Component {
 
     return (
       <View style={styles.body}>
-        <Image source={require('./assets/cookie.png')}/>
-        <Text style={styles.texto}>"{this.state.frase}"</Text>
-        <Botao color='#B59619' text="Quebrar Biscoito" onPress={this.quebrarBiscoito}/>
+        <Image source={require('./assets/relogio.png')} />
+        <Text style={styles.timer}>{this.state.n.toFixed(1)}</Text>
+        <View style={styles.botaoArea}>
+          <TouchableOpacity style={styles.botao}
+            onPress={this.vai}>
+            <Text style={styles.botaoText}>{this.state.botao}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.botao}
+            onPress={this.limpar}>
+            <Text style={styles.botaoText}>LIMPAR</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -78,16 +67,36 @@ export default class PrimeiroProjeto extends Component {
 
 const styles = StyleSheet.create({
   body: {
-    flex: 1,
     paddingTop: 30,
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#2c1f30'
   },
-  texto: {
+  timer: {
+    color: '#baa07a',
+    fontSize: 80,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+    marginTop: -160
+  },
+  botaoArea: {
+    flexDirection: 'row',
+    height: 40,
+    marginTop: 80
+  },
+  botao: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#886532',
+    height: 40,
+    borderRadius: 5,
+    margin: 10
+  },
+  botaoText: {
     fontSize: 17,
-    color: '#B59619',
-    margin: 30,
-    fontStyle: 'italic',
-    textAlign: 'center'
+    fontWeight: 'bold',
+    color: '#FFFFFF'
   }
 });
