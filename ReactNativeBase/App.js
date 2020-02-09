@@ -7,35 +7,54 @@ export default class PrimeiroProjeto extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputTexto: '',
-      texto: ''
+      texto1: 'Texto 1',
+      texto2: 'Texto 2'
     };
-    this.apertouBotao = this.apertouBotao.bind(this);
+    this.escrever = this.escrever.bind(this);
   }
 
-  apertouBotao() {
-    let s = this.state;
+  mudarVogais(texto) {
+    let novoTexto = texto.toLowerCase();
 
-    if (s.inputTexto == "Mauricio") {
-      s.texto = 'Você acertou';
-    } else {
-      s.texto = 'Você errou';
-    }
+    novoTexto = novoTexto.replace(/(a|e|i|o|u)/g, 'i');
+    novoTexto = novoTexto.replace(/(á|à|ã|â)/g, 'i');
+    novoTexto = novoTexto.replace(/(é|è|ê)/g, 'i');
+    novoTexto = novoTexto.replace(/(í|ì|î)/g, 'i');
+    novoTexto = novoTexto.replace(/(ó|ò|ô)/g, 'i');
+    novoTexto = novoTexto.replace(/(ú|ù|û)/g, 'i');
+
+    return novoTexto;
+  }
+
+  escrever(t) {
+    let s = this.state;
+    s.texto1 = t;
+    s.texto2 = this.mudarVogais(t);
     this.setState(s);
   }
 
   render() {
 
     return (
-      <View style={styles.padrao}>
-        <TextInput style={styles.input} 
-          placeholder="Adivinhe o meu nome"
-          onChangeText={(inputTexto) => {
-            this.setState({inputTexto});
-          }} />
-        <Button title='Aperte em mim' 
-          onPress={this.apertouBotao}/>
-        <Text style={styles.texto}>{this.state.texto}</Text>
+      <View style={styles.body}>
+        <View>
+          <Text style={styles.titulo}>Criador de Mimimi</Text>
+        </View>
+        <View style={styles.inputArea}>
+          <TextInput style={styles.input} 
+            placeholder="Digite seu Mimimi" 
+            onChangeText={this.escrever}/>
+        </View>
+        <View style={styles.area}>
+          <Text style={[styles.texto, styles.texto1]}>
+            {this.state.texto1.toUpperCase()}
+          </Text>
+          <Image source={require('./assets/mimimi.jpg')} 
+            style={styles.guri}/>
+          <Text style={[styles.texto, styles.texto2]}>
+            {this.state.texto2.toUpperCase()}
+          </Text>
+        </View>
       </View>
     );
   }
@@ -43,18 +62,54 @@ export default class PrimeiroProjeto extends Component {
 }
 
 const styles = StyleSheet.create({
+  body: {
+    backgroundColor: '#999999',
+    paddingTop: 30,
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  titulo: {
+    fontSize: 30,
+    color: '#FFFFFF'
+  },
+  inputArea: {
+    alignSelf: 'stretch' 
+  },
   input: {
-    height: 40,
     borderWidth: 1,
-    borderColor: 'black',
-    margin: 10,
+    borderColor: '#FFFFFF' ,
+    backgroundColor: '#EEEEEE',
+    color: '#000000',
+    height: 40,
+    margin: 20,
     padding: 10
   },
-  padrao: {
-    paddingTop: 30
+  area: {
+    width: 300,
+    height: 300,
+    marginTop: 10 
+  },
+  guri: {
+    width: 300,
+    height: 300,
+    marginTop: -80,
+    zIndex: 0
   },
   texto: {
-    fontSize: 20,
-    textAlign: 'center'
+    fontSize: 25,
+    color: '#FFFFFF',
+    padding: 10,
+    backgroundColor: 'transparent',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    height: 80,
+    zIndex: 1
+  },
+  texto1: {
+    
+  },
+  texto2: {
+    marginTop: -80
   }
 });
