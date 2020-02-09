@@ -7,11 +7,8 @@ export default class PrimeiroProjeto extends Component {
   render() {
 
     return (
-      <View style={{flex: 1, backgroundColor: 'green'}}>
-        <View style={{height: 170, backgroundColor: 'blue'}}></View>
-        <View style={{flex: 1, backgroundColor: 'yellow'}}></View>
-        <View style={{flex: 2, backgroundColor: 'black'}}></View>
-        <View style={{flex: 3, backgroundColor: 'red'}}></View>
+      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{width: 50, height: 50, backgroundColor: 'blue'}}></View>
       </View>
     );
   }
