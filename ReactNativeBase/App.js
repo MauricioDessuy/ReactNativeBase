@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 
-import { Text, View, StyleSheet, Button, Image, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Button, Image, TextInput, Alert } from 'react-native';
 
 export default class PrimeiroProjeto extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      inputTexto: '',
       texto: ''
     };
-    this.mudarTexto = this.mudarTexto.bind(this);
+    this.apertouBotao = this.apertouBotao.bind(this);
   }
 
-  mudarTexto(t) {
+  apertouBotao() {
     let s = this.state;
-    if (t.length > 0) {
-      s.texto = 'Olá ' + t
+
+    if (s.inputTexto == "Mauricio") {
+      s.texto = 'Você acertou';
     } else {
-      s.texto = '';
+      s.texto = 'Você errou';
     }
     this.setState(s);
   }
@@ -27,8 +29,12 @@ export default class PrimeiroProjeto extends Component {
     return (
       <View style={styles.padrao}>
         <TextInput style={styles.input} 
-          placeholder='Qual seu nome?' 
-          onChangeText={this.mudarTexto}/>
+          placeholder="Adivinhe o meu nome"
+          onChangeText={(inputTexto) => {
+            this.setState({inputTexto});
+          }} />
+        <Button title='Aperte em mim' 
+          onPress={this.apertouBotao}/>
         <Text style={styles.texto}>{this.state.texto}</Text>
       </View>
     );
@@ -48,7 +54,7 @@ const styles = StyleSheet.create({
     paddingTop: 30
   },
   texto: {
-    fontSize:20,
+    fontSize: 20,
     textAlign: 'center'
   }
 });
