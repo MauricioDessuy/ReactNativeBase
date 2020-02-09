@@ -9,7 +9,7 @@ export default class PrimeiroProjeto extends Component {
     this.state = {
       consumido: 0,
       status: 'Ruim',
-      pct: '0%'
+      pct: 0
     }
     this.addCopo = this.addCopo.bind(this);
     this.atualizar = this.atualizar.bind(this);
